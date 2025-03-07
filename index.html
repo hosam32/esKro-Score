@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساب نقاط إسكرو</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            direction: rtl;
+            background: url('https://i.imgur.com/3X4YPrq.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            padding: 20px;
+        }
+        h1 {
+            background: rgba(0, 0, 0, 0.7);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+        }
+        th, td {
+            padding: 15px;
+            border: 1px solid white;
+        }
+        th {
+            background: #ff4500;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+        .increase { background: #4caf50; color: white; }
+        .decrease { background: #ff5722; color: white; }
+        .reset { background: #f44336; color: white; }
+        button:hover { opacity: 0.8; }
+        .record-section {
+            background: url('https://i.imgur.com/6zHwrnJ.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+        .record-section h2 {
+            background: rgba(0, 0, 0, 0.7);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        .record-list p {
+            background: rgba(0, 0, 0, 0.6);
+            display: inline-block;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>حساب نقاط إسكرو</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>اللاعب</th>
+                <th>النقاط</th>
+                <th>إدارة النقاط</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td contenteditable="true">أحمد خيري</td>
+                <td contenteditable="true" id="score1">0</td>
+                <td>
+                    <button class="increase" onclick="changeScore(1, 1)">+1</button>
+                    <button class="decrease" onclick="changeScore(1, -1)">-1</button>
+                </td>
+            </tr>
+            <tr>
+                <td contenteditable="true">حسام محمد</td>
+                <td contenteditable="true" id="score2">0</td>
+                <td>
+                    <button class="increase" onclick="changeScore(2, 1)">+1</button>
+                    <button class="decrease" onclick="changeScore(2, -1)">-1</button>
+                </td>
+            </tr>
+            <tr>
+                <td contenteditable="true">أحمد الششتاوي</td>
+                <td contenteditable="true" id="score3">0</td>
+                <td>
+                    <button class="increase" onclick="changeScore(3, 1)">+1</button>
+                    <button class="decrease" onclick="changeScore(3, -1)">-1</button>
+                </td>
+            </tr>
+            <tr>
+                <td contenteditable="true">رأفت</td>
+                <td contenteditable="true" id="score4">0</td>
+                <td>
+                    <button class="increase" onclick="changeScore(4, 1)">+1</button>
+                    <button class="decrease" onclick="changeScore(4, -1)">-1</button>
+                </td>
+            </tr>
+            <tr>
+                <td contenteditable="true">محمد السيد</td>
+                <td contenteditable="true" id="score5">0</td>
+                <td>
+                    <button class="increase" onclick="changeScore(5, 1)">+1</button>
+                    <button class="decrease" onclick="changeScore(5, -1)">-1</button>
+                </td>
+            </tr>
+            <tr>
+                <td contenteditable="true">عبدالله</td>
+                <td contenteditable="true" id="score6">0</td>
+                <td>
+                    <button class="increase" onclick="changeScore(6, 1)">+1</button>
+                    <button class="decrease" onclick="changeScore(6, -1)">-1</button>
+                </td>
+            </tr>
+            <tr>
+                <td contenteditable="true">حسام الفخراني</td>
+                <td contenteditable="true" id="score7">0</td>
+                <td>
+                    <button class="increase" onclick="changeScore(7, 1)">+1</button>
+                    <button class="decrease" onclick="changeScore(7, -1)">-1</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="reset" onclick="resetScores()">إعادة ضبط النقاط</button>
+
+    <div class="record-section">
+        <h2>📜 سجل النقاط</h2>
+        <div id="record-list">
+            <p>لا توجد بيانات بعد.</p>
+        </div>
+    </div>
+
+    <script>
+        function changeScore(player, value) {
+            let scoreElement = document.getElementById("score" + player);
+            let currentScore = parseInt(scoreElement.innerText);
+            scoreElement.innerText = currentScore + value;
+            updateRecord();
+        }
+
+        function resetScores() {
+            for (let i = 1; i <= 7; i++) {
+                document.getElementById("score" + i).innerText = "0";
+            }
+            updateRecord();
+        }
+
+        function updateRecord() {
+            let recordList = document.getElementById("record-list");
+            recordList.innerHTML = "";
+            for (let i = 1; i <= 7; i++) {
+                let playerName = document.querySelector(`tr:nth-child(${i}) td`).innerText;
+                let score = document.getElementById("score" + i).innerText;
+                recordList.innerHTML += `<p>${playerName}: ${score} نقطة</p>`;
+            }
+        }
+    </script>
+
+</body>
+</html>
